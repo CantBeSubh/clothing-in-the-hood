@@ -1,7 +1,8 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route,Switch } from 'react-router-dom';
 import HomePage from './pages/homepage/homepage.components';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 import './App.css';
 
 const HatsPage=()=>(
@@ -33,7 +34,8 @@ const MensPage=()=>(
 function App() {
   return (
     <div>
-      {/* <HomePage/> */}
+      <Route path='/' component={Header}/>
+      <Switch>
       <Route exact path='/' component={HomePage}/>
       <Route exact path='/shop' component={ShopPage}/>
       <Route path='/shop/hats' component={HatsPage}/>
@@ -41,6 +43,7 @@ function App() {
       <Route path='/shop/sneakers' component={SneakersPage}/>
       <Route path='/shop/womens' component={WomensPage}/>
       <Route path='/shop/mens' component={MensPage}/>
+      </Switch>
     </div>
   );
 }
