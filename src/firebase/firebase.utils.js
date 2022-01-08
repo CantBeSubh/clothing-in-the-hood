@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
+import { getFirestore, collection, addDocs, addDoc, getDoc, getDocs,doc,setDoc } from 'firebase/firestore';
 import { GoogleAuthProvider,getAuth, signInWithPopup} from "firebase/auth";
 
 const firebaseConfig = {
@@ -13,6 +13,8 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+//Auth
 export const provider = new GoogleAuthProvider();
 export const auth = getAuth();
 export const signInWithGoogle=()=>signInWithPopup(auth, provider)
@@ -25,7 +27,58 @@ export const signInWithGoogle=()=>signInWithPopup(auth, provider)
   const email = error.email;
   const credential = GoogleAuthProvider.credentialFromError(error);
 });
+
+//Store user data in firestoreDB
+export const  createUserProfileDocument=async (userAuth,additionalData)=>{
+  if(!userAuth) return;//return if not signed in
+
+  const UserRef = doc(db,'users',`${userAuth.uid}`)
+  const snapShot= await getDoc(UserRef)
+
+  if(!snapShot.exists()){
+    const {displayName,email}=userAuth;
+    const createdAt=new Date();
+
+    try{
+      var addUser= await setDoc(UserRef,{
+      displayName,
+      email,
+      createdAt,
+      ...additionalData
+    });
+    console.log('Adding document at: ',addUser) //undefinded for some reason
+    }catch(err){
+      console.log('Error adding document: ',err)
+    }
+  }
+
+}
+
 export default app;
+
+// export const createUserProfileDocument=async (userAuth,additionalData)=>{
+//   if(!userAuth) return;
+//   const userRef=db.doc(`users/${userAuth}`);
+//   const snapShot= await userRef.get();
+//   if(!snapShot.exists){
+//     const {displayName,email}=userAuth;
+//     const createdAt=new Date();
+
+//     try{
+//       await userRef.set({
+//         displayName,
+//         email,
+//         createdAt,
+//         ...additionalData
+//       })
+//     }catch(err){
+//       console.log('error creating user',err.message)
+//     }
+//   }
+  
+//   return userRef
+// };
+
 
 // // Import the functions you need from the SDKs you need
 // import firebase from "firebase/app";
