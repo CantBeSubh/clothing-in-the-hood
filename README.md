@@ -6,3 +6,4 @@
 - NPM
 - REACT(v16)
 - React Router(v5)
+- Firebase(v9)
