@@ -17,9 +17,18 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
+
+      div{
+        // display: inline-block;
+        // border: 1px red solid; 
+        color: black;
+        font-size: 24px;
+    
+      }
   
       .option {
         padding: 10px 15px;
+        cursor: pointer;
       }
     }
   }
