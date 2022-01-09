@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDocs, addDoc, getDoc, getDocs,doc,setDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDocs, addDoc, getDoc, getDocs,doc,setDoc,} from 'firebase/firestore';
 import { GoogleAuthProvider,getAuth, signInWithPopup} from "firebase/auth";
 
 const firebaseConfig = {
@@ -51,7 +51,7 @@ export const  createUserProfileDocument=async (userAuth,additionalData)=>{
       console.log('Error adding document: ',err)
     }
   }
-
+  return UserRef
 }
 
 export default app;
